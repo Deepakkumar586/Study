@@ -29,12 +29,8 @@ databse.connect();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:3000", //frontend connect with backend
-    credentials: true,
-  })
-);
+const allowedOrigins = ["http://localhost:3000", "https://studyhub-murex.vercel.app"];
+app.use(cors({ origin: (origin, callback) => allowedOrigins.includes(origin) || !origin ? callback(null, true) : callback(new Error("Not allowed by CORS")), credentials: true }));
 
 // when we upload any file on server
 app.use(
