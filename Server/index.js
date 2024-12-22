@@ -11,7 +11,6 @@ const courseRoutes = require("./routes/Course");
 const paymentRoutes = require("./routes/Payments");
 const contactUsRoute = require("./routes/Contact");
 
-
 // databse import
 const databse = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -22,6 +21,7 @@ const dotenv = require("dotenv");
 
 // import Port
 dotenv.config();
+dotenv.config();
 const PORT = process.env.PORT || 4000;
 
 // database connect
@@ -29,8 +29,19 @@ databse.connect();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = ["http://localhost:3000", "https://studyhub-murex.vercel.app"];
-app.use(cors({ origin: (origin, callback) => allowedOrigins.includes(origin) || !origin ? callback(null, true) : callback(new Error("Not allowed by CORS")), credentials: true }));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://studyhub-murex.vercel.app",
+];
+app.use(
+  cors({
+    origin: (origin, callback) =>
+      allowedOrigins.includes(origin) || !origin
+        ? callback(null, true)
+        : callback(new Error("Not allowed by CORS")),
+    credentials: true,
+  })
+);
 
 // when we upload any file on server
 app.use(

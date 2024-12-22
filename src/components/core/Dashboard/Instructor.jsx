@@ -1,41 +1,41 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI"
-import { getInstructorData } from "../../../services/operations/profileAPI"
-import InstructorChart from "./InstructorDashboard/InstructorChart"
+import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI";
+import { getInstructorData } from "../../../services/operations/profileAPI";
+import InstructorChart from "./InstructorDashboard/InstructorChart";
 
 export default function Instructor() {
-  const { token } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile)
-  const [loading, setLoading] = useState(false)
-  const [instructorData, setInstructorData] = useState(null)
-  const [courses, setCourses] = useState([])
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const [loading, setLoading] = useState(false);
+  const [instructorData, setInstructorData] = useState(null);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      const instructorApiData = await getInstructorData(token)
-      const result = await fetchInstructorCourses(token)
-      console.log(instructorApiData)
-      if (instructorApiData.length) setInstructorData(instructorApiData)
+    (async () => {
+      setLoading(true);
+      const instructorApiData = await getInstructorData(token);
+      const result = await fetchInstructorCourses(token);
+      // console.log(instructorApiData);
+      if (instructorApiData.length) setInstructorData(instructorApiData);
       if (result) {
-        setCourses(result)
+        setCourses(result);
       }
-      setLoading(false)
-    })()
-  }, [])
+      setLoading(false);
+    })();
+  }, []);
 
   const totalAmount = instructorData?.reduce(
     (acc, curr) => acc + curr.totalAmountGenerated,
     0
-  )
+  );
 
   const totalStudents = instructorData?.reduce(
     (acc, curr) => acc + curr.totalStudentsEnrolled,
     0
-  )
+  );
 
   return (
     <div>
@@ -47,11 +47,12 @@ export default function Instructor() {
           Let's start something new
         </p>
       </div>
+
       {loading ? (
         <div className="spinner"></div>
       ) : courses.length > 0 ? (
         <div>
-          <div className="my-4 flex h-[450px] space-x-4">
+          <div className="my-4 flex flex-col md:flex-row gap-4 h-auto md:h-[450px]">
             {/* Render chart / graph */}
             {totalAmount > 0 || totalStudents > 0 ? (
               <InstructorChart courses={instructorData} />
@@ -63,6 +64,7 @@ export default function Instructor() {
                 </p>
               </div>
             )}
+
             {/* Total Statistics */}
             <div className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6">
               <p className="text-lg font-bold text-richblack-5">Statistics</p>
@@ -88,17 +90,18 @@ export default function Instructor() {
               </div>
             </div>
           </div>
+
+          {/* Courses List */}
           <div className="rounded-md bg-richblack-800 p-6">
-            {/* Render 3 courses */}
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold text-richblack-5">Your Courses</p>
               <Link to="/dashboard/my-courses">
                 <p className="text-xs font-semibold text-yellow-50">View All</p>
               </Link>
             </div>
-            <div className="my-4 flex items-start space-x-6">
+            <div className="my-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.slice(0, 3).map((course) => (
-                <div key={course._id} className="w-1/3">
+                <div key={course._id} className="w-full">
                   <img
                     src={course.thumbnail}
                     alt={course.courseName}
@@ -138,5 +141,5 @@ export default function Instructor() {
         </div>
       )}
     </div>
-  )
+  );
 }

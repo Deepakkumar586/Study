@@ -31,13 +31,13 @@ exports.resetPasswordToken = async (req, res) => {
     );
 
     // Log the updated details for debugging
-    console.log("Updated User Details:", updatedDetails);
+    // console.log("Updated User Details:", updatedDetails);
 
     // Create the reset password URL
     const url = `http://localhost:3000/update-password/${token}`;
 
     // Debugging: Check the URL and email being sent
-    console.log("Reset Password URL:", url);
+    // console.log("Reset Password URL:", url);
 
     // Send the reset email
     const emailSent = await mailSender(

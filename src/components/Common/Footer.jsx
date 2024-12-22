@@ -6,7 +6,14 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo/Logo-Full-Light.png";
 
 // Icons
-import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGoogle,
+  FaTwitter,
+  FaYoutube,
+  FaGithub,
+  FaLinkedin,
+} from "react-icons/fa";
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
@@ -47,10 +54,17 @@ const Footer = () => {
                 })}
               </div>
               <div className="flex gap-3 text-lg">
-                <FaFacebook />
-                <FaGoogle />
-                <FaTwitter />
-                <FaYoutube />
+                <Link to="https://x.com/deeparyan345">
+                  <FaTwitter />
+                </Link>
+
+                <Link to="https://github.com/Deepakkumar586">
+                  <FaGithub />
+                </Link>
+
+                <Link to="https://www.linkedin.com/in/deepak-kumar-41bab6221/">
+                  <FaLinkedin />
+                </Link>
               </div>
               <div></div>
             </div>
@@ -172,7 +186,9 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="text-center">Made with ❤️ Deepak Kumar © 2023 Studynotion</div>
+          <div className="text-center">
+            Made with ❤️ Deepak Kumar © 2023 Studynotion
+          </div>
         </div>
       </div>
     </div>

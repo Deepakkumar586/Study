@@ -27,7 +27,7 @@ async function sendVerificationEmail(email, otp) {
       "Verification Email",
       emailTemplate(otp)
     );
-    console.log("Email sent successfully: ", mailResponse.response);
+    // console.log("Email sent successfully: ", mailResponse.response);
   } catch (error) {
     console.error("Error while sending email: ", error.message);
     throw error;
@@ -37,7 +37,7 @@ async function sendVerificationEmail(email, otp) {
 // Pre-save hook to send OTP email
 OTPSchema.pre("save", async function (next) {
   if (this.isNew) {
-    console.log("Sending OTP email to:", this.email);
+    // console.log("Sending OTP email to:", this.email);
     await sendVerificationEmail(this.email, this.otp);
   }
   next();

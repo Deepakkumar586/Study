@@ -1,4 +1,4 @@
-import RenderSteps from "./RenderSteps"
+import RenderSteps from "./RenderSteps";
 
 export default function AddCourse() {
   return (
@@ -34,5 +34,5 @@ export default function AddCourse() {
         </div>
       </div>
     </>
-  )
+  );
 }
