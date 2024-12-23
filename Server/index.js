@@ -60,6 +60,16 @@ app.use(
   })
 );
 
+
+// Error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error(err);
+//   res.status(500).json({
+//     success: false,
+//     message: "Something went wrong. Please try again later.",
+//   });
+// });
+
 // File upload configuration
 app.use(
   fileUpload({
