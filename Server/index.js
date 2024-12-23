@@ -34,15 +34,15 @@ const allowedOrigins = [
 ];
 
 // Debugging middleware to log origins
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // You can replace '*' with specific origin
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*"); // You can replace '*' with specific origin
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, OPTIONS"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
 
 // CORS configuration
 app.use(
