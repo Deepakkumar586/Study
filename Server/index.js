@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [
-  "https://studyhub-murex.vercel.app", // Deployed frontend
+  "https://studyhub-chi.vercel.app", // Deployed frontend
   "http://localhost:3000", // Local development
 ];
 
@@ -59,7 +59,6 @@ app.use(
     credentials: true,
   })
 );
-
 
 // Error handling middleware
 // app.use((err, req, res, next) => {
