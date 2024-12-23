@@ -1,49 +1,59 @@
-// express server import
+// Import required modules
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 
-// env import
-
-// All routes
+// Import routes
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const courseRoutes = require("./routes/Course");
 const paymentRoutes = require("./routes/Payments");
 const contactUsRoute = require("./routes/Contact");
 
-// databse import
-const databse = require("./config/database");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
+// Import database and cloudinary
+const database = require("./config/database");
 const { cloudinaryConnect } = require("./config/cloudinary");
-const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
 
-// import Port
-dotenv.config();
+// Load environment variables
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
-// database connect
-databse.connect();
-// middleware
+// Connect to the database
+database.connect();
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// CORS configuration
 const allowedOrigins = [
-  "https://studyhub-murex.vercel.app", // Deployed frontend URL
+  "https://studyhub-murex.vercel.app", // Frontend URL
+  "http://localhost:3000" // Localhost for development
 ];
+
+app.use((req, res, next) => {
+  console.log(`Request Origin: ${req.headers.origin}`); // Debug incoming origin
+  next();
+});
 
 app.use(
   cors({
-    origin: (origin, callback) =>
-      allowedOrigins.includes(origin)
-        ? callback(null, true)
-        : callback(new Error("Not allowed by CORS")),
-    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // Allow requests from allowed origins or no origin
+      } else {
+        console.error(`Blocked by CORS: ${origin}`);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies and credentials
   })
 );
 
-// when we upload any file on server
+// File upload configuration
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -51,26 +61,25 @@ app.use(
   })
 );
 
-// cloudinary connection
+// Connect to Cloudinary
 cloudinaryConnect();
 
-// route
+// Routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
-app.use("/api/v1/contact", require("./routes/Contact"));
-app.use("/api/v1/reach", contactUsRoute);
+app.use("/api/v1/contact", contactUsRoute);
 
-// default routes
+// Default route
 app.get("/", (req, res) => {
   return res.json({
     success: true,
-    message: "Your server is up and running......",
+    message: "Your server is up and running...",
   });
 });
 
-// activate server
+// Start the server
 app.listen(PORT, () => {
-  console.log(`App is running at ${PORT}`);
+  console.log(`App is running at PORT ${PORT}`);
 });
