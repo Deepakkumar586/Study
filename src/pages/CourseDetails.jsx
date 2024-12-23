@@ -29,7 +29,9 @@ const CourseDetails = () => {
         const result = await fetchCourseDetails(courseId);
         if (result.success) {
           setCourseData(result);
-          const count = GetAvgRating(result.data.courseDetails.ratingAndReviews);
+          const count = GetAvgRating(
+            result.data.courseDetails.ratingAndReviews
+          );
           setAvgReviewCount(count);
           let lectures = 0;
           result.data.courseDetails.courseContent.forEach(
@@ -62,7 +64,8 @@ const CourseDetails = () => {
     }
   };
 
-  const isEnrolled = courseData?.data?.courseDetails?.studentsEnrolled?.includes(user?._id);
+  const isEnrolled =
+    courseData?.data?.courseDetails?.studentsEnrolled?.includes(user?._id);
 
   if (!courseData) return <div className="text-center">Loading...</div>;
 
@@ -92,12 +95,21 @@ const CourseDetails = () => {
 
               <div className="flex items-center gap-4 mb-4">
                 <RatingStars Review_Count={avgReviewCount} Star_Size={20} />
-                <span className="text-yellow-500">{avgReviewCount.toFixed(1)}</span>
-                <span className="text-gray-400">({courseData.data.courseDetails.ratingAndReviews.length} Reviews)</span>
+                <span className="text-yellow-500">
+                  {avgReviewCount.toFixed(1)}
+                </span>
+                <span className="text-gray-400">
+                  ({courseData.data.courseDetails.ratingAndReviews.length}{" "}
+                  Reviews)
+                </span>
               </div>
 
-              <p className="text-sm text-gray-400 mb-2">Created by {instructor.firstName}</p>
-              <p className="text-sm text-gray-400">Published on {formatDate(createdAt)}</p>
+              <p className="text-sm text-gray-400 mb-2">
+                Created by {instructor.firstName}
+              </p>
+              <p className="text-sm text-gray-400">
+                Published on {formatDate(createdAt)}
+              </p>
             </div>
 
             <CourseDetailsCard
@@ -110,44 +122,43 @@ const CourseDetails = () => {
         </div>
       </div>
 
-  
-
+      {/* some code  */}
       {/* <div className='mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]'> */}
-        {/* <div className='mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]'> */}
-          {/* <div className='my-8 border border-richblack-600 p-8'> */}
-            {/* <p className='text-3xl font-semibold'>What You Will Learn</p> */}
-            {/* <div className='mt-5'> */}
-              {/* {whatWillYouLearn} */}
-            {/* </div> */}
-          {/* </div> */}
+      {/* <div className='mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]'> */}
+      {/* <div className='my-8 border border-richblack-600 p-8'> */}
+      {/* <p className='text-3xl font-semibold'>What You Will Learn</p> */}
+      {/* <div className='mt-5'> */}
+      {/* {whatWillYouLearn} */}
+      {/* </div> */}
+      {/* </div> */}
 
-          {/* <div className='max-w-[830px]'> */}
+      {/* <div className='max-w-[830px]'> */}
 
-            {/* <div className='flex flex-col gap-3'> */}
-              {/* <p className='text-[28px] font-semibold'>Course Content:</p> */}
+      {/* <div className='flex flex-col gap-3'> */}
+      {/* <p className='text-[28px] font-semibold'>Course Content:</p> */}
 
-              {/* <div className='flex flex-wrap justify-between gap-2'> */}
-                {/* <div className='flex gap-2'> */}
-                  {/* <span>{courseContent.length} section(s)</span>
+      {/* <div className='flex flex-wrap justify-between gap-2'> */}
+      {/* <div className='flex gap-2'> */}
+      {/* <span>{courseContent.length} section(s)</span>
                   <span>{totalNoOfLectures} lectures</span>
                   <span>{courseData.data?.totalDuration} total length</span> */}
-                {/* </div> */}
-                {/* <div> */}
-                  {/* <button
+      {/* </div> */}
+      {/* <div> */}
+      {/* <button
                     className='text-yellow-25'
                     onClick={() => setIsActive([])}>
                     Collapse all Sections
                   </button> */}
-                {/* </div> */}
-              {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
 
-            {/* </div> */}
+      {/* </div> */}
 
-            {/* <div className='py-4'> */}
-              {/* {courseContent.map((section) => ( */}
-                {/* <div key={section._id} className='overflow-hidden border border-solid border-richblack-600 bg-richblack-700 text-richblack-5 last:mb-0'> */}
-                  {/* Section */}
-                  {/* <div onClick={() => handleActive(section._id)}>
+      {/* <div className='py-4'> */}
+      {/* {courseContent.map((section) => ( */}
+      {/* <div key={section._id} className='overflow-hidden border border-solid border-richblack-600 bg-richblack-700 text-richblack-5 last:mb-0'> */}
+      {/* Section */}
+      {/* <div onClick={() => handleActive(section._id)}>
                     <div className='flex cursor-pointer items-start justify-between bg-opacity-20 px-7 py-6 transition-[0.3s]'>
                       <div className='flex items-center gap-2'>
                         {isActive.includes(section._id) ? (
@@ -161,7 +172,7 @@ const CourseDetails = () => {
                     </div>
                   </div> */}
 
-                  {/* <div className={isActive.includes(section._id) ? "block text-richblack-200" : "hidden"}>
+      {/* <div className={isActive.includes(section._id) ? "block text-richblack-200" : "hidden"}>
                     <div className='px-7'>
                       {section?.subSection?.map((subSection, index) => (
                         <div key={index} className='flex cursor-pointer items-center justify-between gap-2 py-3 text-sm'>
@@ -174,13 +185,12 @@ const CourseDetails = () => {
                       ))}
                     </div>
                   </div> */}
-                {/* </div> */}
-              {/* ))} */}
-            {/* </div> */}
-          {/* </div> */}
-        {/* </div> */}
       {/* </div> */}
-
+      {/* ))} */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
 
       {confirmationModal && (
         <ConfirmationModal

@@ -1,5 +1,4 @@
 import React from "react";
-import { BsFillCaretRightFill } from "react-icons/bs";
 import { FaShareSquare } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,49 +28,63 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
         .then(() => toast.success("Added to Cart"))
         .catch(() => toast.error("Failed to add to cart"));
     } else {
-      setConfirmationModal({
-        text1: "You are not logged in!",
-        text2: "Please login to add to Cart",
-        btn1Text: "Login",
-        btn2Text: "Cancel",
-        btn1Handler: () => navigate("/login"),
-        btn2Handler: () => setConfirmationModal(null),
-      });
+      // Show a toast informing the user to log in
+      toast.error(
+        "Please log in to your account to add this course to your cart.",
+        {
+          duration: 5000, // Show for 5 seconds
+        }
+      );
+
+      // Optionally, open a login prompt or redirect to login
+      // setConfirmationModal({
+      //   text1: "You are not logged in!",
+      //   text2: "Please login to add to Cart.",
+      //   btn1Text: "Login",
+      //   btn2Text: "Cancel",
+      //   btn1Handler: () => navigate("/login"),
+      //   btn2Handler: () => setConfirmationModal(null),
+      // });
     }
   };
 
   const isEnrolled = user && course?.studentsEnrolled?.includes(user?._id);
 
   return (
-    <div className="flex flex-col gap-4 p-4 bg-richblack-700 rounded-md text-richblack-5">
-      {/* Thumbnail and Share Button */}
-      <div className="relative w-full h-48 md:h-64">
+    <div className="flex flex-col gap-6 p-6 bg-richblack-700 rounded-lg text-richblack-5 shadow-lg transition-transform duration-300 transform hover:scale-105">
+      {/* Image and Share Button */}
+      <div className="relative w-full h-56 md:h-72 rounded-lg overflow-hidden">
         <img
           src={course.thumbnail}
           alt={course.courseName}
-          className="object-cover w-full h-full rounded-md"
+          className="object-cover w-full h-full rounded-lg"
         />
         <button
-          className="absolute top-2 right-2 p-2 bg-yellow-500 rounded-full hover:bg-yellow-600"
+          className="absolute top-4 right-4 p-3 bg-yellow-500 rounded-full text-white hover:bg-yellow-600 transition-colors duration-300"
           onClick={handleShare}
         >
           <FaShareSquare size={20} />
         </button>
       </div>
 
-      {/* Course Details */}
-      <div className="flex flex-col gap-3">
+      {/* Course Info Section */}
+      <div className="flex flex-col gap-4">
+        {/* Price & Enrollment Status */}
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">Rs. {course.price}</span>
+          <span className="text-2xl font-semibold text-richblack-5">
+            Rs. {course.price}
+          </span>
           {isEnrolled && (
-            <span className="font-semibold text-green-500">Enrolled</span>
+            <span className="px-2 py-1 bg-green-500 text-white rounded-full text-xs font-semibold">
+              Enrolled
+            </span>
           )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col gap-2 md:flex-row">
+        {/* Buy Now & Add to Cart Buttons */}
+        <div className="flex flex-col gap-4 md:flex-row justify-between">
           <button
-            className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            className="w-full md:w-auto px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200"
             onClick={
               isEnrolled
                 ? () => navigate("/dashboard/enrolled-courses")
@@ -82,7 +95,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           </button>
           {!isEnrolled && (
             <button
-              className="px-4 py-2 text-white bg-gray-800 rounded-md hover:bg-gray-900"
+              className="w-full md:w-auto px-6 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors duration-200"
               onClick={handleAddToCart}
             >
               Add to Cart
@@ -90,14 +103,17 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           )}
         </div>
 
-        <div className="text-center text-sm text-gray-400">
+        {/* Money-Back Guarantee */}
+        <div className="text-center text-sm text-gray-400 mt-4">
           30-Day Money-Back Guarantee
         </div>
 
-        {/* Course Includes */}
+        {/* Course Instructions */}
         <div>
-          <h3 className="text-lg font-semibold">This Course Includes:</h3>
-          <ul className="text-sm text-gray-300 list-disc list-inside">
+          <h3 className="text-lg font-semibold text-richblack-5">
+            This Course Includes:
+          </h3>
+          <ul className="list-disc list-inside space-y-2 text-sm text-richblack-200">
             {course.instructions?.map((item, i) => (
               <li key={i}>{item}</li>
             ))}

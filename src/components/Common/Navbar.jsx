@@ -66,7 +66,7 @@ const Navbar = () => {
       )}
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         <Link to="/">
-          <img src={Logo} alt="Logo" width={160} height={32} loading="lazy" />
+          <img src={Logo} alt="Logo" width={130} height={32} loading="lazy" />
         </Link>
 
         <nav className="hidden md:block">
@@ -150,7 +150,9 @@ const Navbar = () => {
           {token === null && (
             <>
               <Link to="/login">
-                <button className=" text-richblack-100">Log in</button>
+                <button className=" rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 ml-1">
+                  Log in
+                </button>
               </Link>
               <Link to="/signup">
                 <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
