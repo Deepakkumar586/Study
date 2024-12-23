@@ -28,15 +28,15 @@ database.connect();
 app.use(express.json());
 app.use(cookieParser());
 
-// Define allowed origins
 const allowedOrigins = [
-  "https://studyhub-murex.vercel.app", // Frontend URL
-  "http://localhost:3000", // Localhost for development
+  "https://studyhub-murex.vercel.app", // Deployed frontend
+  "http://localhost:3000", // Local development
 ];
 
-// Debugging middleware
+// Debugging middleware to log origins
 app.use((req, res, next) => {
-  console.log(`Request Origin: ${req.headers.origin || "undefined"}`);
+  const origin = req.headers.origin || "undefined";
+  console.log(`[server] Request Origin: ${origin}`);
   next();
 });
 
@@ -44,15 +44,15 @@ app.use((req, res, next) => {
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow undefined origins (e.g., Postman, server-to-server) and allowed origins
+      // Allow requests with undefined origins (health checks, server-to-server)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.error(`Blocked by CORS: ${origin}`);
+        console.error(`[server] Blocked by CORS: ${origin}`);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Allow cookies and credentials
+    credentials: true,
   })
 );
 
