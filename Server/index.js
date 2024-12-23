@@ -30,13 +30,13 @@ databse.connect();
 app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://studyhub-murex.vercel.app",
+  "https://studyhub-murex.vercel.app", // Deployed frontend URL
 ];
+
 app.use(
   cors({
     origin: (origin, callback) =>
-      allowedOrigins.includes(origin) || !origin
+      allowedOrigins.includes(origin)
         ? callback(null, true)
         : callback(new Error("Not allowed by CORS")),
     credentials: true,
